@@ -1,0 +1,25 @@
+name: project-env
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+dependencies:
+  - python=3.10 
+  - pytorch::pytorch=2.5.1
+  - pytorch-cuda=12.1 # requires nvidia::cuda-cudart
+  - nvidia/label/cuda-12.1.0::cuda-nvcc
+  - pip
+  - pip:
+    - ipykernel # Must be specified for .devcontainers to work correctly
+    - notebook # Must be specified for .devcontainers to work correctly
+    - ipywidgets
+    - matplotlib
+    - numpy==2.1.3
+    - plotly==6.0.1
+    - tqdm==4.67.1
+    - watermark
+    - torch-summary
+    - keras==3.9
+    - tensorflow[and-cuda]==2.19
+    - pyDOE==0.3.8
+    - mlflow
