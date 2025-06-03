@@ -1,0 +1,24 @@
+// See https://containers.dev/guide/dockerfile for guide
+// Also see https://containers.dev/implementors/json_reference/#image-specific
+// Docker Desktop configuration for GPUs: https://docs.docker.com/desktop/features/gpu/
+// Accessing GPUs in VSCode devcontainer: https://stackoverflow.com/questions/72129213/using-gpu-in-vs-code-container
+{
+    "name": "Jupyter Env",
+	"runArgs": [
+		"--gpus",
+		"all", # If gpus are present this enables docker to see them; if using windows, be sure docker(desktop) is correctly configured (see link above)
+		"--ipc=host" # https://discuss.pytorch.org/t/unable-to-write-to-file-torch-18692-1954506624/9990
+	], 
+    "build": {
+        "dockerfile": "Dockerfile",
+		"context": "..", // This allows Docker to start one directory up so it can see the conda-env.yml file
+		"args": {"UID":1000, "GID":1000} // User and Group IDs - change these to match yours in the base system - this way you own the files you create when the the image shuts down
+    },
+	"customizations": { // Configure tool-specific properties.
+		"vscode": { // Configure properties specific to VS Code.
+			"settings": {},
+			"extensions": []
+		}
+	},
+	"forwardPorts": [1234, 4342] // Forward Jupyter port
+}
