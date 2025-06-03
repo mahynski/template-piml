@@ -12,7 +12,7 @@ $ bash .devcontainer/start_jupyter.sh # at 127.0.0.1:1234
 
 To launch Jupyter MLFlow server:
 ~~~bash
-$ bash .devcontainer/start_mlflow.sh # at 127.0.0.1:1235
+$ bash .devcontainer/start_mlflow.sh # at 127.0.0.1:4342
 ~~~
 
 
