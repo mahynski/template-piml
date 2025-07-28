@@ -3,22 +3,34 @@
 // Docker Desktop configuration for GPUs: https://docs.docker.com/desktop/features/gpu/
 // Accessing GPUs in VSCode devcontainer: https://stackoverflow.com/questions/72129213/using-gpu-in-vs-code-container
 {
-    "name": "Jupyter Env",
-	"runArgs": [
-		"--gpus",
-		"all", # If gpus are present this enables docker to see them; if using windows, be sure docker(desktop) is correctly configured (see link above)
-		"--ipc=host" # https://discuss.pytorch.org/t/unable-to-write-to-file-torch-18692-1954506624/9990
-	], 
+    "name": "Environment",
+    "description": "AI/ML/data science development environment",
+    "runArgs": [
+	"--gpus",
+	"all", // If gpus are present this enables docker to see them; if using windows, be sure docker(desktop) is correctly configured (see link above)
+	"--ipc=host", // https://discuss.pytorch.org/t/unable-to-write-to-file-torch-18692-1954506624/9990
+	"--network=host", // Allows container to access host network when running, e.g., so you can run a separate docker container for qdrant etc. and access them - https://stackoverflow.com/questions/64071161/use-host-networking-while-building-a-vscode-devcontainer
+    ],
     "build": {
         "dockerfile": "Dockerfile",
-		"context": "..", // This allows Docker to start one directory up so it can see the conda-env.yml file
-		"args": {"UID":1000, "GID":1000} // User and Group IDs - change these to match yours in the base system - this way you own the files you create when the the image shuts down
+        "context": "..", // This allows Docker to start one directory up so it can see the conda-env.yml file
+        "args": {
+	    "UID":1000, 
+	    "GID":1000
+	}, // User and Group IDs - change these to match yours in the base system - this way you own the files you create when the the image shuts down
     },
-	"customizations": { // Configure tool-specific properties.
-		"vscode": { // Configure properties specific to VS Code.
-			"settings": {},
-			"extensions": []
-		}
-	},
-	"forwardPorts": [1234, 4342] // Forward Jupyter port
+    "hostRequirements": {
+	"gpu": "optional", 
+	"cpus": 2, 
+	"memory": "4gb", 
+	"storage": "32gb"
+    },
+    "customizations": { // Configure tool-specific properties.
+	"vscode": { // Configure properties specific to VS Code.
+		"settings": {},
+		"extensions": []
+	}
+    },
+    "remoteUser": "user",
+    "forwardPorts": [1234, 1235] // Explicitly forward ports
 }

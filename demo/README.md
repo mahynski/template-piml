@@ -1,6 +1,3 @@
-Introduction
-===
-
 The examples here (including data in `data/`) are largely taken from the [examples](https://github.com/maziarraissi/PINNs/tree/master/main) which accompany the original papers which introduced the notion of PINNs.  These have been updated and modified, but intellectual credit goes to the original author: @maziarraissi.
 
 These demos provide an introduction to PINNs and should be read in order:
