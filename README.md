@@ -30,7 +30,7 @@ These are already configured with ipykernel, so you can just install the Jupyter
 
 ~~~bash
 $ cd projects/
-$ uv init new_project # Creates new project root directory projects/new_project
+$ uv init new_project --bare --no-workspace # Creates new project root directory projects/new_project
 $ cd new_project
 ~~~
 
@@ -70,7 +70,7 @@ You can also create a [new python **package**](https://docs.astral.sh/uv/concept
 
 ~~~bash
 $ cd projects/new_project
-$ uv init --package my_new_package # Create a new package
+$ uv init --package my_new_package --no-workspace # Create a new package
 $ ... # Modify this as needed
 $ uv run my_new_package # Installs package into new_project and executes the main() function
 ~~~
@@ -134,31 +134,4 @@ This `.crt` file can be stored in the `.ignore/` folder if necessary.
 
 Update the CITATION.cff file to enable appropriate citations.
 
-The logo for this repository (logo.png) was generated using ChatGPI on July 25, 2025 with the prompt "Create a logo that represents automatic machine learning"
-
-
-
-
-
-
-How To Use
----
-
-<img src="logo.png" align="right" width=200 />
-
-First clone and open in VSCode, then "Reopen in Container" to install devcontainer.
-
-To launch Jupyter notebook server:
-~~~bash
-$ bash .devcontainer/start_jupyter.sh # at 127.0.0.1:1234
-~~~
-
-To launch Jupyter MLFlow server:
-~~~bash
-$ bash .devcontainer/start_mlflow.sh # at 127.0.0.1:4342
-~~~
-
-
-Citation
----
 The logo for this repository (logo.png) was generated using Google Gemini 2.0 Flash (Imagen 3) on Mar. 26, 2025 with the prompt "Create a logo of outline of a brain with one half including symbols reminiscent of science, for example an atom, beaker, pendulum, or satellite, and the other half a small fully connected neural network displaying the connected nodes."
