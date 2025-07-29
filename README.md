@@ -20,6 +20,8 @@ $ uv sync
 $ uv run ipython kernel install --user --env VIRTUAL_ENV ../.venv --name=demo
 ~~~
 
+These are already configured with ipykernel, so you can just install the Jupyter kernel directly as shown above.
+
 ## Using UV
 
 ### General Philosophy of UV Projects
