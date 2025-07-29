@@ -16,7 +16,7 @@ Then navigate to `demo/` and install the virtual environment with uv.
 
 ~~~bash
 $ cd projects/demo
-$ uv sync
+$ uv sync --no-install-workspace
 $ uv run ipython kernel install --user --env VIRTUAL_ENV ../.venv --name=demo
 ~~~
 
