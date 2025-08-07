@@ -7,5 +7,5 @@ root_dir="$(realpath $project_dir/../)";
 cd $root_dir;
 uv init $project_name --bare --no-workspace;
 cd $project_dir;
-uv add mlflow jupyterlab pydantic-settings;
+uv add mlflow jupyterlab pydantic-settings pre-commit;
 uv add -r $requirements;
