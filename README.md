@@ -2,7 +2,7 @@
 
 <img src="logo.png" align="right" width=110 />
 
-A small set of demonstrations are available in the `projects/` directory which illustrate different Physics Informed Machine Learning implementations in PyTorch and Tensorflow.
+A small set of demonstrations are available in the `projects/` directory which illustrate different Physics Informed Machine Learning implementations.
 
 To get started:
 
@@ -12,15 +12,17 @@ $ bash .devcontainer/start_mlflow.sh
 $ bash .devcontainer/start_jupyter.sh
 ~~~
 
-Then navigate to `demo/` and install the virtual environment with uv.
+Then navigate to `demo/chosen_demo` and install the virtual environment with uv.
 
 ~~~bash
-$ cd projects/demo
+$ cd projects/demo/chosen_demo
 $ uv sync --no-install-workspace
-$ uv run ipython kernel install --user --env VIRTUAL_ENV ../.venv --name=demo
+$ uv run ipython kernel install --user --env VIRTUAL_ENV ../.venv --name=chosen_demo
 ~~~
 
 These are already configured with ipykernel, so you can just install the Jupyter kernel directly as shown above.
+
+Note that `demo/symbolic_regression` is not intended to work with Jupyter so this is not included in that demo.
 
 ## Using UV
 
