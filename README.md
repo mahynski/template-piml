@@ -2,7 +2,7 @@
 
 <img src="logo.png" align="right" width=110 />
 
-A small set of demonstrations are available in the `projects/` directory which illustrate different PINN implementations in PyTorch and Tensorflow.
+A small set of demonstrations are available in the `projects/` directory which illustrate different Physics Informed Machine Learning implementations in PyTorch and Tensorflow.
 
 To get started:
 
