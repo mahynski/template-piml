@@ -2,7 +2,7 @@
 
 <img src="logo.png" align="right" width=110 />
 
-A small set of demonstrations are available in the `projects/` directory which illustrate different Physics Informed Machine Learning implementations.
+A small set of demonstrations are available in the `demo/` directory which illustrate different Physics Informed Machine Learning implementations.
 
 To get started:
 
@@ -137,6 +137,7 @@ This `.crt` file can be stored in the `.ignore/` folder if necessary.
 Update the CITATION.cff file to enable appropriate citations.
 
 The logo for this repository (logo.png) was generated using Google Gemini 2.0 Flash (Imagen 3) on Mar. 26, 2025 with the prompt "Create a logo of outline of a brain with one half including symbols reminiscent of science, for example an atom, beaker, pendulum, or satellite, and the other half a small fully connected neural network displaying the connected nodes."
+
 
 
 
