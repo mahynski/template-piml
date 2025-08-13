@@ -17,7 +17,7 @@ Then navigate to `demo/chosen_demo` and install the virtual environment with uv.
 ~~~bash
 $ cd projects/demo/chosen_demo
 $ uv sync --no-install-workspace
-$ uv run ipython kernel install --user --env VIRTUAL_ENV ../.venv --name=chosen_demo
+$ uv run ipython kernel install --user --env VIRTUAL_ENV ../../.venv --name=chosen_demo
 ~~~
 
 These are already configured with ipykernel, so you can just install the Jupyter kernel directly as shown above.
@@ -137,3 +137,4 @@ This `.crt` file can be stored in the `.ignore/` folder if necessary.
 Update the CITATION.cff file to enable appropriate citations.
 
 The logo for this repository (logo.png) was generated using Google Gemini 2.0 Flash (Imagen 3) on Mar. 26, 2025 with the prompt "Create a logo of outline of a brain with one half including symbols reminiscent of science, for example an atom, beaker, pendulum, or satellite, and the other half a small fully connected neural network displaying the connected nodes."
+
