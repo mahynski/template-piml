@@ -32,5 +32,6 @@
 	}
     },
     "remoteUser": "user",
-    "forwardPorts": [1234, 1235] // Explicitly forward ports
+    "forwardPorts": [1234, 1235], // Explicitly forward ports
+	"postCreateCommand": "bash ./.devcontainer/setup.sh"
 }
