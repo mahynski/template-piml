@@ -21,5 +21,4 @@ RUN adduser --disabled-password --gecos '' --uid $UID --gid $GID user
 
 SHELL ["/bin/bash", "--login", "-c"]
 
-
 USER user
