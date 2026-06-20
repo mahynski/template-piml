@@ -26,12 +26,13 @@ Download them from Google Fonts if missing:
     https://github.com/google/fonts/raw/main/ofl/spacemono/SpaceMono-Regular.ttf
 """
 
+import math
 import os
 
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # ==== PER-REPO SETTINGS (change these) ====================================
-TITLE = 'template-uv-project'   # repo name, printed under the badge
+TITLE = 'template-piml'   # repo name, printed under the badge
 
 
 def draw_hero(md, box, neon):
@@ -49,32 +50,33 @@ def draw_hero(md, box, neon):
     Notes
     -----
     Draw only flat ``neon`` shapes/text -- the caller blurs a copy of this
-    layer to make the glow, so no glow handling is needed here. This default
-    is the ``template-uv-project`` hero: a viewfinder/template frame (four
-    corner brackets) around a lowercase ``uv`` monogram. Replace the body for
-    other repos; keep the fill color ``neon``.
+    layer to make the glow, so no glow handling is needed here. This is the
+    ``template-piml`` hero: a continuous sine wave (the *physics* -- a
+    governing signal) strung with neural-network *nodes* (the *machine
+    learning*), fusing the two halves of "physics-informed ML". Replace the
+    body for other repos; keep the fill color ``neon``.
     """
     fx0, fy0, fx1, fy1 = box
-    arm, th, cr = int(96 * SS), int(26 * SS), int(8 * SS)
+    bw, bh = fx1 - fx0, fy1 - fy0
+    cy = (fy0 + fy1) / 2.0
 
-    def box_sorted(x0, y0, x1, y1):
-        return [min(x0, x1), min(y0, y1), max(x0, x1), max(y0, y1)]
+    amp = 0.40 * bh              # wave amplitude
+    stroke = int(22 * SS)
+    node_r = int(34 * SS)
 
-    def bracket(x, y, dx, dy):  # L bracket with its corner at (x, y)
-        md.rounded_rectangle(box_sorted(x, y, x + dx * arm, y + dy * th), cr, fill=neon)
-        md.rounded_rectangle(box_sorted(x, y, x + dx * th, y + dy * arm), cr, fill=neon)
+    def wave_y(t):               # y on a single sine cycle at fraction t in [0, 1]
+        return cy - math.sin(2.0 * math.pi * t) * amp
 
-    bracket(fx0, fy0, +1, +1)
-    bracket(fx1, fy0, -1, +1)
-    bracket(fx0, fy1, +1, -1)
-    bracket(fx1, fy1, -1, -1)
+    # --- the wave (physics): one smooth neon cycle spanning the badge ---
+    n = 240
+    pts = [(fx0 + (i / n) * bw, wave_y(i / n)) for i in range(n + 1)]
+    md.line(pts, fill=neon, width=stroke, joint='curve')
 
-    font = jost(int(196 * SS), weight=600)
-    txt = 'uv'
-    tb = md.textbbox((0, 0), txt, font=font)
-    cx, cy = (fx0 + fx1) // 2, (fy0 + fy1) // 2
-    md.text((cx - (tb[2] - tb[0]) // 2 - tb[0], cy - (tb[3] - tb[1]) // 2 - tb[1]),
-            txt, font=font, fill=neon)
+    # --- nodes (ML): dots sampling the wave at the ends, crest, trough, and
+    # the central zero-crossing -- the wave begins and ends on a node. ---
+    for t in (0.0, 0.25, 0.5, 0.75, 1.0):
+        cx, cyk = fx0 + t * bw, wave_y(t)
+        md.ellipse([cx - node_r, cyk - node_r, cx + node_r, cyk + node_r], fill=neon)
 
 
 # ==== BRAND FRAME (keep identical across repos) ===========================

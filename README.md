@@ -1,6 +1,9 @@
 # Using this Template
 
-<img src="logo.png" align="right" width=110 />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="logo-dark.png" />
+  <img src="logo-light.png" align="right" width=200 alt="template-piml logo" />
+</picture>
 
 A small set of demonstrations are available in the `demo/` directory which illustrate different Physics Informed Machine Learning implementations.
 
