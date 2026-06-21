@@ -17,8 +17,8 @@ neon hero; otherwise keep text to a minimum.
 An app-icon-style **glossy dark-glass badge** holding a **neon-green hero
 glyph** with a soft neon glow, the repo name set beneath. Modern / techy, dark
 neon aesthetic, suitable as an app icon / favicon. The dark-glass badge is used
-in *both* variants — only the surrounding canvas, the badge's depth treatment,
-and the title color change between light and dark.
+in *both* variants — the canvas is transparent in both, so only the title
+color (and the dark variant's title glow) changes between light and dark.
 
 ## What stays the same vs. what changes
 
@@ -55,8 +55,6 @@ minimal-hue philosophy.
 | Neon bright core | `190, 250, 213` | `#befdd5` | inner glow core |
 | Deep green | `21, 128, 61` | `#15803d` | light-mode title (contrast on white) |
 | Glass top → bottom | `34,37,46` → `9,10,13` | `#22252e` → `#090a0d` | badge body gradient |
-| Dark canvas top → bottom | `12,13,16` → `6,6,8` | `#0c0d10` → `#060608` | dark variant background |
-| Light canvas top → bottom | `251,251,253` → `231,232,236` | `#fbfbfd` → `#e7e8ec` | light variant background |
 
 ### Geometry (at 1x; render at 2x supersample, then downscale with LANCZOS)
 
@@ -92,14 +90,14 @@ any hero shape picks up the same glow.
 
 | Element | Dark variant | Light variant |
 |---------|--------------|---------------|
-| Canvas | dark gradient + soft radial green pool | light gradient |
-| Badge depth | neon green halo behind badge | soft offset drop shadow |
+| Canvas | transparent | transparent |
 | Badge & hero | dark glass + neon glyph | **identical** |
 | Title | `#86efac` with soft glow | `#15803d`, no glow |
 
-Rationale: the neon halo and glowing title disappear on white, so the light
-variant swaps them for a drop shadow and a deeper green that holds contrast;
-the badge itself never changes.
+Rationale: the badge is a clean cutout on a transparent canvas, so it sits on
+whatever page color is behind it. The glowing neon title vanishes on white, so
+the light variant swaps it for a deeper green that holds contrast; the badge
+itself never changes.
 
 ## How to build
 
