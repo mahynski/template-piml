@@ -84,8 +84,6 @@ SS = 2                          # supersampling factor for crisp edges
 W, H = 1590 * SS, 1098 * SS
 
 # palette
-BG_TOP, BG_BOT = (12, 13, 16), (6, 6, 8)            # dark canvas gradient
-LIGHT_TOP, LIGHT_BOT = (251, 251, 253), (231, 232, 236)  # light canvas gradient
 GLASS_TOP, GLASS_BOT = (34, 37, 46), (9, 10, 13)    # dark-glass badge gradient
 NEON = (134, 239, 172)          # #86efac signature neon green (hero + dark title)
 NEON_BRIGHT = (190, 250, 213)   # lighter core that sells the glow
@@ -128,35 +126,16 @@ def vgrad(top, bot):
 
 def render(theme):
     """Render one variant; ``theme`` is ``'light'`` or ``'dark'``."""
-    # --- canvas ---
-    if theme == 'light':
-        img = vgrad(LIGHT_TOP, LIGHT_BOT).convert('RGBA')
-    else:
-        img = vgrad(BG_TOP, BG_BOT).convert('RGBA')
-        lift_mask = Image.new('L', (W, H), 0)            # soft radial pool of light
-        ImageDraw.Draw(lift_mask).ellipse(
-            [W // 2 - 520 * SS, int(H * 0.42) - 380 * SS,
-             W // 2 + 520 * SS, int(H * 0.42) + 380 * SS], fill=70)
-        lift_mask = lift_mask.filter(ImageFilter.GaussianBlur(220 * SS))
-        img.paste(Image.new('RGBA', (W, H), (26, 40, 32, 255)), (0, 0), lift_mask)
-
+    # --- transparent canvas: the badge is a clean cutout with no
+    #     backdrop, so the README shows it over whatever page color sits
+    #     behind it. Only the title color (and the dark variant's title
+    #     glow) changes per theme. ---
+    img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
     # The badge uses the FIXED module-level geometry (BADGE_BOX) in every
     # variant, so the central glass rectangle is the exact same size and
     # position regardless of theme, hero, or title.
-
-    # --- depth behind the badge: shadow (light) or neon halo (dark) ---
-    if theme == 'light':
-        shadow = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-        ImageDraw.Draw(shadow).rounded_rectangle(
-            [BADGE_X0, BADGE_Y0 + 16 * SS, BADGE_X1, BADGE_Y1 + 16 * SS],
-            BADGE_RADIUS, fill=(20, 24, 30, 90))
-        img.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(46 * SS)))
-    else:
-        halo = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-        ImageDraw.Draw(halo).rounded_rectangle(BADGE_BOX, BADGE_RADIUS, fill=(*NEON, 90))
-        img.alpha_composite(halo.filter(ImageFilter.GaussianBlur(55 * SS)))
 
     # --- glass body (dark in BOTH themes) ---
     mask = Image.new('L', (W, H), 0)
@@ -169,8 +148,9 @@ def render(theme):
         [BADGE_X0, BADGE_Y0, BADGE_X1, BADGE_Y0 + int(BADGE_SIZE * 0.46)],
         BADGE_RADIUS, fill=(255, 255, 255, 26))
     gloss = gloss.filter(ImageFilter.GaussianBlur(26 * SS))
-    img.paste(gloss, (0, 0),
-              Image.composite(gloss.getchannel('A'), Image.new('L', (W, H), 0), mask))
+    # clip the sheen to the badge, then composite so the glass stays opaque
+    gloss.putalpha(Image.composite(gloss.getchannel('A'), Image.new('L', (W, H), 0), mask))
+    img.alpha_composite(gloss)
 
     # --- neon hairline border ---
     draw.rounded_rectangle(BADGE_BOX, BADGE_RADIUS, outline=(*NEON, 70), width=2 * SS)
@@ -203,7 +183,7 @@ def render(theme):
         img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(14 * SS)))
         draw.text((tx, ty), TITLE, font=font, fill=NEON)
 
-    out = img.convert('RGB').resize((1590, 1098), Image.LANCZOS)
+    out = img.resize((1590, 1098), Image.LANCZOS)  # keep alpha
     path = f'logo-{theme}.png'
     out.save(path)
     print('saved', path)
