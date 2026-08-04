@@ -16,7 +16,7 @@ dependencies = [
     "ipywidgets",
     "notebook",
     "ipykernel>=6.30.0",
-    "keras==3.9",
+    "keras==3.12.4",
     "tensorflow[and-cuda]==2.19",
     "pyDOE==0.3.8",
     "mlflow",
